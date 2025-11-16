@@ -1,0 +1,32 @@
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Schema;
+
+return new class extends Migration
+{
+    /**
+     * Run the migrations.
+     */
+    public function up(): void
+    {
+        Schema::create('cabang', function (Blueprint $table) {
+            $table->increments('id');
+            $table->string('nama_cabang', 100);
+            $table->text('alamat')->nullable();
+            $table->string('telepon', 20)->nullable();
+            $table->timestamp('created_at')->nullable()->useCurrent();
+        });
+        DB::statement("alter table \"cabang\" add column \"status\" status_enum null default 'aktif'");
+    }
+
+    /**
+     * Reverse the migrations.
+     */
+    public function down(): void
+    {
+        Schema::dropIfExists('cabang');
+    }
+};
